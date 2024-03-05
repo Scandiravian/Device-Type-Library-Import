@@ -18,10 +18,11 @@ class DTLRepo:
         self.repo = None
         self.cwd = os.getcwd()
 
-        if os.path.isdir(self.repo_path):
-            self.pull_repo()
-        else:
-            self.clone_repo()
+        if args.do_git_pull:
+            if os.path.isdir(self.repo_path):
+                self.pull_repo()
+            else:
+                self.clone_repo()
 
     def get_relative_path(self):
         return self.repo_path

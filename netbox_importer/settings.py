@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 import os
-from log_handler import LogHandler
-from repo import DTLRepo
+from netbox_importer.log_handler import LogHandler
+from netbox_importer.repo import DTLRepo
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -32,6 +32,8 @@ parser.add_argument('--slugs', nargs='+', default=SLUGS,
                     help="List of device-type slugs to import eg. ap4431 ws-c3850-24t-l")
 parser.add_argument('--branch', default=REPO_BRANCH,
                     help="Git branch to use from repo")
+parser.add_argument('--do-git-pull', action='store_false', default=True,
+                    help="Skip git pull")
 parser.add_argument('--verbose', action='store_true', default=False,
                     help="Print verbose output")
 
@@ -43,7 +45,7 @@ args.slugs = [s for slug in args.slugs for s in slug.split(",") if s.strip()]
 
 handle = LogHandler(args)
 # Evaluate environment variables and exit if one of the mandatory ones are not set
-MANDATORY_ENV_VARS = ["REPO_URL", "NETBOX_URL", "NETBOX_TOKEN"]
+MANDATORY_ENV_VARS = ["NETBOX_URL", "NETBOX_TOKEN"]
 for var in MANDATORY_ENV_VARS:
     if var not in os.environ:
         handle.exception("EnvironmentError", var,

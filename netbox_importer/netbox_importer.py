@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from collections import Counter
 from datetime import datetime
 import yaml
@@ -6,8 +5,8 @@ import pynetbox
 from glob import glob
 import os
 
-import settings
-from netbox_api import NetBox
+import netbox_importer.settings
+from netbox_importer.netbox_api import NetBox
 
 
 def main():
